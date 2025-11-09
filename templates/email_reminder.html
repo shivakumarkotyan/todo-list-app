@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #482828ff;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #25336eff 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: #4681bbff;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #3f86ceff;
+        }
+        .task-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #30c5b1ff;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .due-date {
+            background: #6f5558ff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .priority-high {
+            border-left-color: #dc3545;
+        }
+        .priority-medium {
+            border-left-color: #3589c1ff;
+        }
+        .priority-low {
+            border-left-color: #efbca9ff;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #2b75c0ff;
+            color: #79c794ff;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            background: #3b434dff;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .task-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .task-meta {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📅 Task Reminder</h1>
+        <p>Don't forget about your upcoming task!</p>
+    </div>
+    
+    <div class="content">
+        <h2>Hello!</h2>
+        <p>This is a friendly reminder about your task that is due soon:</p>
+        
+        <div class="task-card {% if priority %}priority-{{ priority }}{% endif %}">
+            <div class="task-title">
+                <strong>{{ task_title }}</strong>
+                {% if priority %}
+                <span style="float: right; font-size: 0.8em; background: {% if priority == 'high' %}#dc3545{% elif priority == 'medium' %}#ffc107{% else %}#28a745{% endif %}; color: {% if priority == 'medium' %}black{% else %}white{% endif %}; padding: 2px 8px; border-radius: 10px;">
+                    {{ priority|upper }} PRIORITY
+                </span>
+                {% endif %}
+            </div>
+            
+            {% if task_description %}
+            <div class="task-meta">
+                <strong>Description:</strong><br>
+                {{ task_description }}
+            </div>
+            {% endif %}
+            
+            <div class="due-date">
+                ⏰ Due: {{ due_date }}
+            </div>
+            
+            <p><strong>Time remaining:</strong> {{ time_remaining }}</p>
+        </div>
+        
+        <p>
+            <a href="{{ app_url }}" class="btn">View in To-Do App</a>
+        </p>
+        
+        <p>
+            <small>
+                You can mark this task as complete in the app or update its due date if needed.
+            </small>
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p>
+            Sent from your To-Do List App<br>
+            <a href="{{ app_url }}" style="color: #6c757d;">{{ app_url }}</a>
+        </p>
+        <p>
+            <small>
+                You're receiving this email because you enabled email reminders for this task.<br>
+                <a href="{{ unsubscribe_url }}" style="color: #6c757d;">Unsubscribe from reminders</a>
+            </small>
+        </p>
+    </div>
+</body>
+</html>
